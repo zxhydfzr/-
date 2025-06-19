@@ -30,7 +30,15 @@ def chat():
 
     response = requests.post("https://api.deepseek.com/v1/chat/completions",
                              headers=headers, json=payload)
-    print(response.text)
+    response = requests.post("https://api.deepseek.com/v1/chat/completions",
+                         headers=headers, json=payload)
+
+print(response.status_code)      # 输出状态码，如 200 或 401
+print(response.text)             # ✅ 输出实际返回内容（错误信息就在这里）
+
+data = response.json()
+reply = data["choices"][0]["message"]["content"]
+
 
 
     reply = response.json()["choices"][0]["message"]["content"]
