@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AI营养饮食顾问</title>
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            background-color: #f7f9fc;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        img.avatar {
+            width: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-top: 15px;
+        }
+        button {
+            padding: 12px 24px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #reply {
+            margin-top: 20px;
+            font-size: 16px;
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <img src="/static/img/nutrition-avatar.png" alt="AI" class="avatar">
+        <h1>我是你的AI营养饮食顾问</h1>
+        <input type="text" id="input" placeholder="你今天想咨询什么饮食建议？" />
+        <br>
+        <button onclick="send()">发送</button>
+        <div id="reply"></div>
+    </div>
+
+    <script>
+        async function send() {
+            const input = document.getElementById("input").value;
+            const response = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: input })
+            });
+            const data = await response.json();
+            document.getElementById("reply").innerText = "🥗 AI顾问建议：\n" + data.reply;
+        }
+    </script>
+</body>
+</html>
